@@ -1,0 +1,4 @@
+#safirnotification service
+safirnotification_git_repo: https://github.com/b3lab/safir_notification_service.git
+safirnotification_git_install_branch: master
+safirnotification_git_project_group: horizon_all

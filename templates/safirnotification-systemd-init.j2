@@ -1,0 +1,30 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=B3LAB safirnotification service
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User={{ safirnotification_system_user_name }}
+Group={{ safirnotification_system_group_name }}
+
+{% if program_override is defined %}
+ExecStart={{ program_override }} {{ program_config_options|default('') }} --log-file=/var/log/safirnotification/{{ item.value.service_name }}.log
+{% else %}
+ExecStart={{ safirnotification_bin }}/{{ item.value.service_name }} {{ program_config_options|default('') }} --log-file=/var/log/safirnotification/{{ item.value.service_name }}.log
+{% endif %}
+
+# Give a reasonable amount of time for the server to start up/shut down
+TimeoutSec=120
+Restart=on-failure
+RestartSec=2
+
+CPUAccounting=true
+BlockIOAccounting=true
+MemoryAccounting=false
+TasksAccounting=true
+
+[Install]
+WantedBy=multi-user.target

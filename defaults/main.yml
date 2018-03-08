@@ -1,0 +1,93 @@
+---
+# Copyright 2018, TUBITAK B3LAB
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+## Verbosity Options
+debug: False
+
+# Set the package install state for distribution and pip packages
+# Options are 'present' and 'latest'
+safirnotification_package_state: "latest"
+safirnotification_pip_package_state: "latest"
+
+## Toggle developer mode
+safirnotification_developer_mode: False
+
+## The git source/branch
+safirnotification_git_repo: https://github.com/b3lab/safir_notification_service
+safirnotification_git_install_branch: master
+
+## The packages to build from source (used in developer mode)
+safirnotification_developer_constraints:
+  - "git+{{ safirnotification_git_repo }}@{{ safirnotification_git_install_branch }}#egg=safirnotification"
+
+# Name of the virtual env to deploy into
+safirnotification_venv_tag: untagged
+safirnotification_bin: "/openstack/venvs/safirnotification-{{ safirnotification_venv_tag }}/bin"
+
+# venv_download, even when true, will use the fallback method of building the
+# venv from scratch if the venv download fails.
+safirnotification_venv_download: "{{ not safirnotification_developer_mode | bool }}"
+# URL of the pre-built virtualenv
+safirnotification_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/safirnotification.tgz
+
+## System info
+safirnotification_system_user_name: safirnotification
+safirnotification_system_group_name: safirnotification
+safirnotification_system_shell: /bin/false
+safirnotification_system_comment: safirnotification system user
+safirnotification_system_user_home: "/var/lib/{{ safirnotification_system_user_name }}"
+
+#safirnotification.conf variables
+safirnotification_port: 9765
+safirnotification_monitor_panel_url: {{ keystone_service_publicuri_proto }}://{{ external_lb_vip_address }}/project/monitor
+safirnotification_email_host: ''
+safirnotification_email_port:  587
+safirnotification_email_host_user: ''
+safirnotification_email_host_password: ''
+cloud_config_name: 'default'
+
+safirnotification_service_in_ldap: false
+
+# safirnotification packages that must be installed before anything else
+safirnotification_requires_pip_packages:
+  - virtualenv
+  - virtualenv-tools
+  - python-keystoneclient
+  - httplib2
+
+# Common pip packages
+safirnotification_pip_packages:
+  - git+https://github.com/b3lab/safir_email_notifier@master#egg=safir_email_notifier
+  - git+https://github.com/b3lab/safir_notification_service@master#egg=safirnotification
+  - keystonemiddleware
+  - oslo.config
+  - python-keystoneclient
+  - flask
+  - python-openstackclient
+  - aodhclient
+
+safirnotification_init_overrides: {}
+
+safirnotification_services:
+  safirnotification:
+    group: safirnotification
+    service_name: safirnotification
+    init_config_overrides: "{{ safirnotification_init_overrides }}"
+
+install_test_packages: False
+
+safirnotification_role_project_group: horizon_all
+
+safirnotification_config_overrides: {}

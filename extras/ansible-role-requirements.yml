@@ -1,0 +1,4 @@
+- name: os_safirnotification
+  scm: git
+  src: https://github.com/b3lab/safir_notification_service.git
+  version: master
