@@ -14,46 +14,42 @@
 
 - name: Create TEMP run dir
   file:
-    path: "/var/run/{{ item.value.service_name }}"
+    path: "/var/run/{{ item.service_name }}"
     state: directory
     owner: "{{ safirnotification_system_user_name }}"
     group: "{{ safirnotification_system_group_name }}"
     mode: "02755"
-  with_dict: "{{ safirnotification_services }}"
-  when: inventory_hostname in groups[item.value.group]
+  with_items: "{{ filtered_safirnotification_services }}"
 
 - name: Create TEMP lock dir
   file:
-    path: "/var/lock/{{ item.value.service_name }}"
+    path: "/var/lock/{{ item.service_name }}"
     state: directory
     owner: "{{ safirnotification_system_user_name }}"
     group: "{{ safirnotification_system_group_name }}"
     mode: "02755"
-  with_dict: "{{ safirnotification_services }}"
-  when: inventory_hostname in groups[item.value.group]
+  with_items: "{{ filtered_safirnotification_services }}"
 
 - name: Create tempfile.d entry
   template:
     src: "safirnotification-systemd-tmpfiles.j2"
-    dest: "/etc/tmpfiles.d/openstack-{{ item.value.service_name }}.conf"
+    dest: "/etc/tmpfiles.d/openstack-{{ item.service_name }}.conf"
     mode: "0644"
     owner: "root"
     group: "root"
-  with_dict: "{{ safirnotification_services }}"
-  when: inventory_hostname in groups[item.value.group]
+  with_items: "{{ filtered_safirnotification_services }}"
   notify:
     - Restart safirnotification services
 
 - name: Place the systemd init script
   config_template:
     src: "safirnotification-systemd-init.j2"
-    dest: "/etc/systemd/system/{{ item.value.service_name }}.service"
+    dest: "/etc/systemd/system/{{ item.service_name }}.service"
     mode: "0644"
     owner: "root"
     group: "root"
     config_overrides: "{{ item.value.init_config_overrides }}"
     config_type: "ini"
-  with_dict: "{{ safirnotification_services }}"
-  when: inventory_hostname in groups[item.value.group]
+  with_items: "{{ filtered_safirnotification_services }}"
   notify:
     - Restart safirnotification services

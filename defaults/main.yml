@@ -85,6 +85,7 @@ safirnotification_services:
     group: safirnotification
     service_name: safirnotification
     init_config_overrides: "{{ safirnotification_init_overrides }}"
+    start_order: 1
 
 install_test_packages: False
 
