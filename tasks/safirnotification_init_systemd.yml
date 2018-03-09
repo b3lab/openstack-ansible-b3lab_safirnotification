@@ -48,7 +48,7 @@
     mode: "0644"
     owner: "root"
     group: "root"
-    config_overrides: "{{ item.value.init_config_overrides }}"
+    config_overrides: "{{ item.init_config_overrides }}"
     config_type: "ini"
   with_items: "{{ filtered_safirnotification_services }}"
   notify:

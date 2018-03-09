@@ -82,7 +82,7 @@ safirnotification_init_overrides: {}
 
 safirnotification_services:
   safirnotification:
-    group: safirnotification
+    group: horizon_all
     service_name: safirnotification
     init_config_overrides: "{{ safirnotification_init_overrides }}"
     start_order: 1
