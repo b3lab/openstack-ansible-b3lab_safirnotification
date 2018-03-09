@@ -51,7 +51,7 @@ safirnotification_system_user_home: "/var/lib/{{ safirnotification_system_user_n
 
 #safirnotification.conf variables
 safirnotification_port: 9765
-safirnotification_monitor_panel_url: {{ keystone_service_publicuri_proto }}://{{ external_lb_vip_address }}/project/monitor
+safirnotification_monitor_panel_url: '{{ keystone_service_publicuri_proto }}://{{ external_lb_vip_address }}/project/monitor'
 safirnotification_email_host: ''
 safirnotification_email_port:  587
 safirnotification_email_host_user: ''
