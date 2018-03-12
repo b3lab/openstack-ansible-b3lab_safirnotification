@@ -13,7 +13,7 @@ Group={{ safirnotification_system_group_name }}
 {% if program_override is defined %}
 ExecStart={{ program_override }} {{ program_config_options|default('') }} --logfile /var/log/safirnotification/{{ item.service_name }}.log --config-file /etc/safirnotification/{{ item.service_name }}.conf
 {% else %}
-ExecStart={{ safirnotification_bin }}/{{ item.service_name }} {{ program_config_options|default('') }} -c /etc/safirnotification/{{ item.service_name }}.conf
+ExecStart={{ safirnotification_bin }}/{{ item.service_name }} {{ program_config_options|default('') }} --logfile /var/log/safirnotification/{{ item.service_name }}.log --config-file /etc/safirnotification/{{ item.service_name }}.conf
 {% endif %}
 
 # Give a reasonable amount of time for the server to start up/shut down
