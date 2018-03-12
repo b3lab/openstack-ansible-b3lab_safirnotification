@@ -2,25 +2,33 @@
 
 [DEFAULT]
 
-# clouds.yaml file should either be in the current directory or
-# ~/.config/openstack directory or /etc/openstack directory.
-# openstack_config_name is the config name used in the clouds.yaml file
-openstack_config_name = '{{ cloud_config_name }}'
-
-# This URL will be send by email as a shortcut to
-# Safir Monitor Panel
-monitor_panel_url = {{ safirnotification_monitor_panel_url }}
+debug = false
 
 [api]
 # API configuration
 
 # API host URL
-host = {{ external_lb_vip_address }}
+host_api = {{ external_lb_vip_address }}
 
 # API port
 port = {{ safirnotification_port }}
 
-[email]
+[cloud]
+#
+# From safirnotification.common.config
+#
+
+# Cloud config name (string value)
+cloud_name = '{{ cloud_config_name }}'
+
+# Keystone identity API version (string value)
+#identity_api_version = 3
+
+# OpenStack Dashboard URL to be send with notification mail (string
+# value)
+horizon_url = {{ safirnotification_monitor_panel_url }}
+
+[email_server]
 # E-mail server configurations to be used for notification emails
 
 # SMTP Server
@@ -30,7 +38,7 @@ smtp_server = '{{ safirnotification_email_host }}'
 smtp_port = '{{ safirnotification_email_port }}'
 
 # E-mail account username
-login_addr = '{{ safirnotification_email_host_user }}'
+login_address = '{{ safirnotification_email_host_user }}'
 
 # E-mail account password
 password = '{{ safirnotification_email_host_password }}'

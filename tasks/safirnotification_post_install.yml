@@ -26,5 +26,9 @@
       dest: "/etc/safirnotification/safirnotification.conf"
       config_overrides: "{{ safirnotification_config_overrides }}"
       config_type: "ini"
+    - src: "api_paste.ini.j2"
+      dest: "/etc/safirnotification/api_paste.ini"
+      config_overrides: "{{ safirnotification_api_paste_ini_overrides }}"
+      config_type: "ini"
   notify:
     - Restart safirnotification services
