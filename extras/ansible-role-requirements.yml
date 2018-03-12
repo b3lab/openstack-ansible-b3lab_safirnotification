@@ -1,4 +1,4 @@
 - name: os_safirnotification
   scm: git
-  src: https://github.com/b3lab/safir_notification_service.git
-  version: master
+  src: https://github.com/b3lab/openstack-ansible-b3lab_safirnotification.git
+  version: stable/pike

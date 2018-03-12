@@ -26,7 +26,7 @@ safirnotification_developer_mode: False
 
 ## The git source/branch
 safirnotification_git_repo: https://github.com/b3lab/safir_notification_service
-safirnotification_git_install_branch: master
+safirnotification_git_install_branch: stable/pike
 
 ## The packages to build from source (used in developer mode)
 safirnotification_developer_constraints:
@@ -89,7 +89,7 @@ safirnotification_pip_packages:
   - six>=1.9.0 # MIT
   - stevedore>=1.5.0 # Apache-2.0
   - git+https://github.com/b3lab/safir_email_notifier@master#egg=safir_email_notifier
-  - git+https://github.com/b3lab/safir_notification_service@master#egg=safirnotification
+  - git+https://github.com/b3lab/safir_notification_service@stable/pike#egg=safirnotification
 
 safirnotification_api_init_overrides: {}
 
